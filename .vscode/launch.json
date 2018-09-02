@@ -1,0 +1,44 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "node",
+            "name": "vscode-jest-tests",
+            "request": "launch",
+            "program": "${workspaceFolder}/node_modules/jest/bin/jest",
+            "args": [
+                "--runInBand"
+            ],
+            "cwd": "${workspaceFolder}",
+            "console": "integratedTerminal",
+            "internalConsoleOptions": "neverOpen"
+        },
+        {
+            "type": "node",
+            "request": "attach",
+            "cwd": "${workspaceFolder}/server",
+            "name": "Attach by Process ID",
+            "processId": "${command:PickProcess}",
+            // "outFiles": ["${workspaceFolder}/**/*.js"]
+        },
+        {
+            "type": "node",
+            "name": "vscode-jest-server-tests",
+            "request": "launch",
+            "args": [
+                "--inspect",
+                "${workspaceFolder}/server/run-tests.ts",
+                "--watch",
+                "--runInBand",
+            ],
+            "cwd": "${workspaceFolder}/server",
+            "console": "integratedTerminal",
+            "internalConsoleOptions": "neverOpen",
+            // "program": "${workspaceFolder}/server/node_modules/.bin/ts-node",
+            // "outFiles": ["${workspaceFolder}/server/**/*.js"]
+        },
+    ]
+}

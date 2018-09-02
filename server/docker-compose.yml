@@ -1,0 +1,13 @@
+---
+
+version: "3.4"
+
+services:
+    postgres:
+        image: postgres:10
+        environment:
+          POSTGRES_USER: ${NIOBE_DB_USER}
+          POSTGRES_PASSWORD: ${NIOBE_DB_PASS}
+          POSTGRES_DB: ${NIOBE_DB_NAME}
+        ports:
+          - 5433:5432
