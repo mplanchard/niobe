@@ -79,7 +79,7 @@ export default class StateStore {
     }
 
     public fastForward() {
-        this.index = (this.index === this.registry.count() - 1)
+        this.index = (this.index === this.states.count() - 1)
             ? this.index
             : this.index + 1;
     }
