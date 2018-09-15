@@ -1,21 +1,22 @@
 import { List, Map } from 'immutable';
-import R from 'ramda';
-import { AnyFunction, MutableMap } from './generic_interface';
 import State from './state';
 
 
-interface Action extends Map<string, any> {
+export interface Action {
     [key: string]: any;
     type: string;
 }
 
-type ReducerFunction = (a: Action) => State;
+export type ReducerFunction = (previousState: State, action: Action) => State;
 
-type DispatchFunction = (a: Action) => null;
+export type DispatchFunction = (action: Action) => null;
 
-type StateFunction = (s: () => State, d: DispatchFunction) => any;
+export type StateFunction = (
+    getState: () => State,
+    dispatch: DispatchFunction,
+) => any;
 
-type DecoratedStateFunction = () => any;
+export type DecoratedStateFunction = () => any;
 
 type RegistryItem = DecoratedStateFunction;
 
@@ -47,7 +48,9 @@ export default class StateStore {
         this.index = (props.index === undefined) ? 0 : props.index;
         this.reducer = props.reducer;
         this.registry = (props.registry === undefined) ? List() : props.registry;
-        this.states = (props.states === undefined) ? List() : props.states;
+        this.states = (props.states === undefined)
+            ? List([State.of({})])
+            : props.states;
     }
 
     public get currentState() {
@@ -91,14 +94,14 @@ export default class StateStore {
     }
 
     private reduce(action: Action) {
-        const newState = this.reducer(action);
+        const newState = this.reducer(this.currentState, action);
         if (! this.currentState.equals(newState)) {
-            this.pushState(this.reducer(action));
+            this.pushState(newState);
             this.callSubscribers();
         }
     }
 
-    private callSubscribers() {
+    private async callSubscribers() {
         // @ts-ignore
         this.registry.map((func) => func());
     }
