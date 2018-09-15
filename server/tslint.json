@@ -3,7 +3,12 @@
     "extends": [
         "tslint:recommended"
     ],
-    "jsRules": {},
-    "rules": {},
+    "jsRules": {
+    },
+    "rules": {
+        "interface-name": [true, "never-prefix"],
+        "no-consecutive-blank-lines": [true, 2],
+        "quotemark": [true, "single", "jsx-double", "avoid-escape", "avoid-template"]
+    },
     "rulesDirectory": []
 }
